@@ -1,0 +1,87 @@
+﻿@{
+    this.ViewData["IsAuthenticated"] = this.Context.Session.Keys.Contains("CurrentUser");
+    this.ViewData["IsOrganiser"] = this.Context.Session.Keys.Contains("IsOrganiser");
+    this.ViewData["IsPhotoJunkey"] = this.Context.Session.Keys.Contains("IsPhotoJunkey");
+}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+        @ViewData["Title"] - PhotoContest.Web
+    </title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body style="background-color: currentcolor;">
+    <div class="sidebar">
+        <div class="profile_info">
+            <p>
+                <h4>
+                    imagination
+                </h4>
+            </p>
+            <p>
+                <h4 class="text-success">.NET</h4>
+            </p>
+        </div>
+        <a asp-action="Index" asp-controller="Home"><i class="fas fa-desktop"></i><span>Home</span></a>
+        <a asp-action="Index" asp-controller="Contests"><i class="fas fa-cogs"></i><span>Open Contests</span></a>
+        @if ((bool)this.ViewData["IsAuthenticated"] && (bool)this.ViewData["IsOrganiser"])
+        {
+            <a asp-action="VoteContests" asp-controller="Contests"><i class="fa-solid fa-check-to-slot"></i><span>Vote Contests</span></a>
+            <a asp-action="FinishedContests" asp-controller="Contests"><i class="fa-solid fa-check-double"></i><span>Finished Contests</span></a>
+            <a asp-action="GetUsers" asp-controller="User"><i class="fa-solid fa-users"></i><span>Users</span></a>
+        }
+        @*<a href="#"><i class="fas fa-table"></i><span>Tables</span></a>*@
+        <a asp-action="FinishedContestsRated" asp-controller="Contests"><i class="fa-solid fa-trophy"></i><span>Winners</span></a>
+        @if (!(bool)this.ViewData["IsOrganiser"])
+        {
+
+           <a asp-action="Contacts" asp-controller="Home"><i class="fa-solid fa-share-nodes"></i><span>Contacts</span></a>
+        }
+        <a asp-action="About" asp-controller="Home"><i class="fas fa-info-circle"></i><span>About</span></a>
+        @*<a href="#"><i class="fas fa-sliders-h"></i><span>Settings</span></a>*@
+        @if (!(bool)this.ViewData["IsAuthenticated"])
+        {
+            <a style="margin-top: 196px;" asp-action="LoginUser" asp-controller="User"><i class="fa-solid fa-key"></i><span>Login</span></a>
+            <a asp-action="Register" asp-controller="User"><i class="fa-solid fa-file-signature"></i><span>Register</span></a>
+        }
+        else if ((bool)this.ViewData["IsAuthenticated"] && (bool)this.ViewData["IsOrganiser"])
+        {
+            <a style="margin-top: 87px;" asp-action="Details" asp-controller="User"><i class="fa-solid fa-vault"></i><span>Profile</span></a>
+            <a asp-action="Logout" asp-controller="User"><i class="fa-solid fa-door-open"></i><span>Logout</span></a>
+        }
+        else
+        {
+            <a style="margin-top: 196px;" asp-action="Details" asp-controller="User"><i class="fa-solid fa-vault"></i><span>Profile</span></a>
+            <a asp-action="Logout" asp-controller="User"><i class="fa-solid fa-door-open"></i><span>Logout</span></a>
+        }
+    </div>
+    <div class="content">
+        <div class="container" style="max-width: 1450px; margin-left: 223px; margin-top: 50px">
+            <main role="main" style="width: 1450px;" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.nav_btn').click(function () {
+                $('.mobile_nav_items').toggleClass('active');
+            });
+        });
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

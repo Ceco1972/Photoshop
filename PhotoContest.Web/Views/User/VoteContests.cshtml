@@ -1,0 +1,54 @@
+﻿@{
+    this.ViewData["Title"] = "OpenContests";
+    this.ViewData["IsAuthenticated"] = this.Context.Session.Keys.Contains("CurrentUser");
+    this.ViewData["IsOrganiser"] = this.Context.Session.Keys.Contains("IsOrganiser");
+    int count = 1;
+}
+@model PhotoContest.Models.DTOs.ListModels.ContestIndex
+<body>
+    @if (!Model.ContestList.Any())
+    {
+        <div style="text-align: -webkit-center; color: cornsilk; padding:20px;">
+            <p>
+                <b>
+                    There are no contest in voting.
+                </b>
+            </p>
+        </div>
+    }
+    @if (Model.ContestList.Any())
+    {
+        <table class="table table-hover table-striped" style="">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Contest Title</th>
+                    <th scope="col">Due date</th>
+                    <th scope="col">Contest Category</th>
+                </tr>
+            </thead>
+            <tbody class="table-hover" style="background-color: gainsboro">
+                @foreach (var contest in Model.ContestList)
+                {
+                    <tr>
+                        <td>
+                            @count
+                        </td>
+                        <td>
+                            @contest.Title.ToString()
+                        </td>
+                        <td>
+                            @contest.DueDate.ToString("HH:mm dd-MMMM/yyyy")
+                        </td>
+                        <td>
+                            @contest.ContestType
+                        </td>
+                    </tr>
+                    count++;
+                }
+
+            </tbody>
+        </table>
+
+    }
+</body>

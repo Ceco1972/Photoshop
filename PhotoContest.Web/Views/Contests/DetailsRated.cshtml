@@ -1,0 +1,198 @@
+﻿@{
+    this.ViewData["Title"] = "DetailsRated";
+    this.ViewData["IsAuthenticated"] = this.Context.Session.Keys.Contains("CurrentUser");
+    this.ViewData["IsPhotoJunkey"] = this.Context.Session.Keys.Contains("IsPhotoJunkey");
+    @using PhotoContest.Models.Models.eNums;
+    bool sharedFirst = false;
+    bool sharedSecond = false;
+    bool sharedThird = false;
+}
+@model PhotoContest.Models.DTOs.ContestDTO
+<body>
+    <div style="color: cornsilk;">
+        <h3>
+            @Model.Title
+        </h3>
+        @if (Model.Pictures.Any())
+        {
+            var pictures = Model.Pictures.ToArray();
+
+            var PicturesWinners = pictures.OrderByDescending(p => p.Rating).ToArray();
+            for (int i = 0; i < PicturesWinners.Count(); i++)
+            {
+
+                var picture = PicturesWinners[i];
+
+                <div class="container" style="max-width: 470px; max-height: 420px; display: inline-table; padding: 20px;">
+
+
+                    @if (i == 0 && i + 1 < pictures.Count())
+                    {
+                        if (pictures[i].Rating == pictures[i + 1].Rating)
+                        {
+                            sharedFirst = true;
+                        }
+                        if (pictures[i].Rating > pictures[i + 1].Rating)
+                        {
+                            sharedFirst = false;
+                        }
+                    }
+                    @if (i == 1 && sharedFirst == false && i + 1 < pictures.Count())
+                    {
+                        if (pictures[i].Rating == pictures[i + 1].Rating)
+                        {
+                            sharedSecond = true;
+                        }
+                        if (pictures[i].Rating > pictures[i + 1].Rating)
+                        {
+                            sharedSecond = false;
+                        }
+                    }
+                    @if (i == 2 && sharedFirst == true && i + 1 < pictures.Count())
+                    {
+                        if (pictures[i].Rating == pictures[i + 1].Rating)
+                        {
+                            sharedSecond = true;
+                        }
+                        if (pictures[i].Rating > pictures[i + 1].Rating)
+                        {
+                            sharedSecond = false;
+                        }
+                    }
+                    @if (i == 2 && sharedFirst == false && sharedSecond == false && i + 1 < pictures.Count())
+                    {
+                        if (pictures[i].Rating == pictures[i + 1].Rating)
+                        {
+                            sharedThird = true;
+                        }
+                        if (pictures[i].Rating > pictures[i + 1].Rating)
+                        {
+                            sharedThird = false;
+                        }
+                    }
+                    @if (i == 3 && sharedFirst == true && sharedSecond == false && i + 1 < pictures.Count())
+                    {
+                        if (pictures[i].Rating == pictures[i + 1].Rating)
+                        {
+                            sharedThird = true;
+                        }
+                        if (pictures[i].Rating > pictures[i + 1].Rating)
+                        {
+                            sharedThird = false;
+                        }
+                    }
+                    @if (i == 3 && sharedFirst == false && sharedSecond == true && i + 1 < pictures.Count())
+                    {
+                        if (pictures[i].Rating == pictures[i + 1].Rating)
+                        {
+                            sharedThird = true;
+                        }
+                        if (pictures[i].Rating > pictures[i + 1].Rating)
+                        {
+                            sharedThird = false;
+                        }
+                    }
+                    @if (i == 4 && sharedFirst == true && sharedSecond == true && i + 1 < pictures.Count())
+                    {
+                        if (pictures[i].Rating == pictures[i + 1].Rating)
+                        {
+                            sharedThird = true;
+                        }
+                        if (pictures[i].Rating > pictures[i + 1].Rating)
+                        {
+                            sharedThird = false;
+                        }
+                    }
+                    <div class="card">
+                        @if (i == 0 && sharedFirst == false)
+                        {
+                            <div class="card-header" style="color:goldenrod;">First place</div>
+                        }
+                        @if (i < 2 && sharedFirst == true)
+                        {
+                            <div class="card-header" style="color:goldenrod;">First place</div>
+                        }
+                        @if (i == 1 && sharedFirst == false && sharedSecond == false)
+                        {
+                            <div class="card-header" style="color:goldenrod;"> Second place</div>
+                        }
+                        @if ((i == 2 || i == 3) && sharedFirst == true && sharedSecond == true)
+                        {
+                            <div class="card-header" style="color:goldenrod;"> Second place</div>
+                        }
+                        @if ((i == 1 || i == 2) && sharedSecond == true && sharedFirst == false)
+                        {
+                            <div class="card-header" style="color:goldenrod;"> Second place</div>
+                        }
+                        @if (i == 2 && sharedFirst == false && sharedSecond == false)
+                        {
+                            <div class="card-header" style="color:goldenrod;">Third place</div>
+                        }
+                        @if (i == 3 && sharedFirst == true || sharedSecond == true)
+                        {
+                            <div class="card-header" style="color:goldenrod;">Third place</div>
+                        }
+                        @if (i == 4 && sharedFirst == true && sharedSecond == true && sharedThird == false)
+                        {
+                            <div class="card-header" style="color:goldenrod;">Third place</div>
+                        }
+                        @if (i > 3 && i < 6 && sharedFirst && sharedSecond == true && sharedThird == true)
+                        {
+                            <div class="card-header" style="color:goldenrod;">Third place</div>
+                        }
+
+                        <img src="~/Uploads/@picture.ImageFile" class="card-img-top">
+                        <div class="card-body" style="color: black;">
+                            <h5 class="card-title">@picture.Title</h5>
+                            <div class="card-footer">
+                            <p class="card-text">@picture.Story</p>
+                            <p class="card-text">@picture.Rating </p>
+
+                            </div>
+                            <div class="card-footer">
+                                <p class="card-text">@picture.Author.FirstName @picture.Author.LastName</p>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-success" style=" margin-left: 85px; padding-left: 60px; padding-right: 60px; margin-right: 20px;"
+                                    href="#" data-toggle="modal" data-target="#myDetailsModal-@i">
+                                Show more...
+                            </button>
+
+                        </div>
+                        <div class="modal fade" style="color:GrayText" id="myDetailsModal-@i">
+                            <div class="modal-dialog modal-lg modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1>@picture.Title</h1>
+                                    </div>
+                                    <div class="modal-body">
+                                        <img src="~/Uploads/@picture.ImageFile" style="width:765px;">
+                                        <div class="modal-footer">
+                                            <b>
+                                                <i>
+                                                    @picture.Story
+
+                                                </i>
+                                            </b>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a asp-action="AuthorDetails" asp-controller="User" asp-route-id="@picture.Author.Id">@picture.Author.Username</a>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-danger" data-toggle="modal" data-target="#myDetailsModal-@i">
+                                            Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            }
+        }
+    </div>
+
+</body>

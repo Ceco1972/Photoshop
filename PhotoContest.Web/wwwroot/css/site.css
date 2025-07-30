@@ -1,0 +1,230 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+/* Provide sufficient contrast against white background */
+a {
+  color: #0366d6;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px; /* Vertically center the text there */
+}
+#btn-login{
+margin:5px;
+float: right;
+}
+#btn-register{
+margin:5px;
+float: right;
+}
+.nav-item{
+margin-right:45px;
+text-decoration: underline;
+text-underline-position: under;
+}
+.images{
+max-width: 100%;
+max-height: 100%;
+display: block;
+}
+.box{
+width: 250px; 
+height:auto;       
+border: 5px solid black;
+}
+
+#custom-div-visualization {
+    display: inline-block;
+    max-width: 470px;
+    max-height: 330px;
+    margin-bottom: 5px;
+}
+
+#custom-card-visualization {
+    display: inline-block;
+    max-width: 470px;
+    max-height: 420px;
+    margin-bottom: 5px;
+}
+
+#btn-show-more {
+    background-color: #28a745;
+    border-color: black;
+    padding-left: 60px;
+    padding-right: 60px;
+    margin-right: 20px;
+}
+
+body{
+   margin: 0;
+   padding: 0;
+   font-family: "Roboto", sans-serif,
+}
+
+header{
+    z-index: 1;
+    position: fixed;
+    background: #000000;
+    padding: 20px;
+    width: calc(100% - 0%);
+    top: 0;
+    height: 30px;
+}
+
+.left_area h3{
+    color: #fff;
+    margin: 0;
+    text-transform: uppercase;
+    font-size: 22px;
+    font-weight: 900;
+}
+
+.left_area span{
+    color: #49ff00
+
+}
+
+.sidebar {
+    z-index: 1;
+    top: 0;
+    background: #3a3a3a;
+    margin-top: 0px;
+    padding-top: 30px;
+    position: fixed;
+    left: 0;
+    width: 220px;
+    height: calc(100% - 0%);
+    transition: 0.5s;
+    transition-property: left;
+    overflow-y: auto;
+}
+
+.sidebar .profile_image{
+    width: 100px;
+    height: 100px;
+    border-radius: 100px;
+    margin-bottom: 10px;
+
+}
+
+.sidebar h4{
+    color: #ccc;
+    margin-top: 0;
+    margin-bottom: 20px;
+    transition: 0.5s;
+    transition-property: left;
+}
+
+.sidebar a{
+    color: #fff;
+    display: block;
+    width: 100%;
+    line-height: 60px;
+    text-decoration: none;
+    padding-left: 40px;
+    box-sizing: border-box;
+    transition: 0.5s;
+    transition-property: background;
+}
+
+    .sidebar a:hover {
+        background: #49ff00;
+    }
+
+    .sidebar i{
+        padding-right: 10px;
+    }
+    label sidebar_btn{
+        z-index: 1;
+        color:#fff;
+        position: fixed;
+        cursor:pointer;
+        left:220px;
+        font-size:20px;
+        margin: 5px 0;
+        transition: 0.5s;
+        transition-property: color;
+    }
+
+    label #sidebar_btn:hover{
+        color: #19B3D3;
+
+    }
+
+    
+
+
+
+
+.profile_info{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.sidebar .profile_info .profile_image{
+    width: 100px;
+    height: 100px;
+    border-radius: 100px;
+    margin-bottom: 10px;
+}

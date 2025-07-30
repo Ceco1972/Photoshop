@@ -1,0 +1,158 @@
+﻿@{
+    this.ViewData["Title"] = "OpenContests";
+    this.ViewData["IsAuthenticated"] = this.Context.Session.Keys.Contains("CurrentUser");
+    this.ViewData["IsPhotoJunkey"] = this.Context.Session.Keys.Contains("IsPhotoJunkey");
+    @using PhotoContest.Web.Models;
+    var voteModel = new VotePictureModel();
+}
+@model PhotoContest.Models.DTOs.ContestDTO
+<body>
+
+    @if (Model.Pictures.Any())
+    {
+
+        if ((bool)this.ViewData["IsAuthenticated"] && (bool)this.ViewData["IsPhotoJunkey"])
+        {
+            <div class="text-center text-danger">
+                <h4>
+                    Only organisers can rate and give a vote!
+                </h4>
+            </div>
+        }
+        else if (Model.Phase != PhotoContest.Models.Models.eNums.Phase.Voting)
+        {
+            <div class="text-center text-danger">
+                <h3>
+                    Can rate when it's in vote phase!
+                </h3>
+            </div>
+        }
+        else
+        {
+            var Pictures = Model.Pictures.ToArray();
+            for (int i = 0; i < Pictures.Length; i++)
+            {
+                var picture = Pictures[i];
+
+                <div class="container" style="max-width: 470px; max-height:420px; margin: 5px; display: inline-block">
+
+
+                    <div class="card" style="padding: 5px;">
+                        <img src="~/Uploads/@picture.ImageFile" class="card-img-top">
+                        <div class="card-body" style="color:black">
+                            <h5 class="card-title">@picture.Title</h5>
+                            <p class="card-text">@picture.Story</p>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-secondary" style="padding-left: 60px; padding-right: 60px;
+                                margin-right: 20px;" href="#" data-toggle="modal" data-target="#myDetailsModal-@i">
+                                Show more...
+                            </button>
+                            @if (picture.IsVoted == false)
+                            {
+                                <button class="btn btn-success" style="padding-left: 55px; padding-right: 55px; margin-left: 5px;" href="#"
+                                        data-toggle="modal" data-target="#myVoteModal-@i">
+                                    Vote
+                                </button>
+                            }
+                            else
+                            {
+                                <button class="btn btn-danger disabled" style="padding-left: 55px; padding-right: 55px; margin-left: 5px;">Vote</button>
+                            }
+
+                        </div>
+                        <div class="modal fade" style="color:GrayText" id="myDetailsModal-@i">
+                            <div class="modal-dialog modal-lg modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1>@picture.Title</h1>
+                                    </div>
+                                    <div class="modal-body">
+                                        <img src="~/Uploads/@picture.ImageFile" style="width:765px;">
+                                        <div class="modal-footer">
+                                            @picture.Story
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-danger" data-toggle="modal" data-target="#myDetailsModal-@i">
+                                            Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" style="color:GrayText" id="myVoteModal-@i">
+                            <div class="modal-dialog modal-lg modal-dialog-centered">
+                                <div class="modal-content">
+                                    <form asp-action="VotePicture" asp-route-id="@picture.Id" enctype="multipart/form-data">
+                                        <div class="modal-header">
+                                            <h1>Vote - @picture.Title</h1>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="modal-body">
+                                                    <img src="~/Uploads/@picture.ImageFile" style="width:765px;">
+                                                    <div class="modal-footer">
+                                                        @picture.Story
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+
+                                                    <b>
+                                                        <label asp-for="@voteModel.Rating" class="form-label"></label>
+                                                    </b>
+                                                    <div>
+                                                        <select asp-for="@voteModel.Rating">
+                                                            <option value=1>1</option>
+                                                            <option value=2>2</option>
+                                                            <option value=3>3</option>
+                                                            <option value=4>4</option>
+                                                            <option value=5>5</option>
+                                                            <option value=6>6</option>
+                                                            <option value=7>7</option>
+                                                            <option value=8>8</option>
+                                                            <option value=9>9</option>
+                                                            <option value=10>10</option>
+                                                        </select>
+                                                        <br />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <b>
+                                                        <label asp-for="@voteModel.Comment" class="form-label"></label>
+                                                    </b>
+                                                    <div>
+                                                        <textarea style=" min-width:500px; max-width:100%;min-height:50px;height:100%;width:100%;"
+                                                                  asp-for="@voteModel.Comment" class="form-input" spellcheck="true"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer form-input">
+                                            <input type="submit" class="btn btn-success" asp-controller="Picture" asp-action="VotePicture" asp-route-id="@picture.Id" />
+                                            <button class="btn btn-danger" style="float:left"
+                                                    data-toggle="modal" data-target="#myVoteModal-@i"
+                                                    asp-controller="Picture" asp-action="WrongCategory" asp-route-id="@picture.Id">
+                                                Wrong Category
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        @*<div class="text-center" style="color:cornsilk">
+                <h4>
+                    Only organiser can rate the photos!
+                </h4>
+                <p>
+                    If you are an organiser, please login!
+                </p>
+            </div>*@
+    }
+</body>

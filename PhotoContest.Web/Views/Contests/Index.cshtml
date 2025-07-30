@@ -1,0 +1,90 @@
+﻿@{
+    this.ViewData["Title"] = "OpenContests";
+    this.ViewData["IsAuthenticated"] = this.Context.Session.Keys.Contains("CurrentUser");
+    this.ViewData["IsOrganiser"] = this.Context.Session.Keys.Contains("IsOrganiser");
+    int count = 1;
+}
+<body>
+
+    @model PhotoContest.Models.DTOs.ListModels.ContestIndex
+    @if (Model.ContestList.Any())
+    {
+        <table class="table table-hover table-striped" style="">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">
+                        <a asp-controller="Contests" asp-action="Index" asp-route-SortBy="Title" asp-route-SortOrder="@this.ViewData["SortOrder"]">Title</a>
+                    </th>
+                    <th scope="col">
+                        <a asp-controller="Contests" asp-action="Index" asp-route-SortBy="Category" asp-route-SortOrder="@this.ViewData["SortOrder"]">Category</a>
+                    </th>
+                    <th scope="col">
+                        Date @*<a asp-controller="Contests" asp-action="Index" asp-route-SortBy="FirstPhaseEnd" asp-route-SortOrder="@this.ViewData["SortOrder"]">FirstPhaseEnd</a>*@
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody class="table-hover" style="background-color: gainsboro">
+                @foreach (var contest in Model.ContestList)
+                {
+                    <tr>
+                        <td>
+                            @count
+                        </td>
+
+                        @if ((bool)this.ViewData["IsAuthenticated"])
+                        {
+                            <td>
+                                <a asp-controller="Contests" asp-action="Details" asp-route-id="@contest.Id"><span>@contest.Title.ToString()</span></a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                @contest.Title.ToString()
+                            </td>
+                        }
+
+                        <td>
+                            @contest.Category
+
+                        </td>
+                        <td>
+                            @contest.FirstPhaseEnd.ToString("HH:mm dd-MMMM/yyyy")
+
+                        </td>
+                    </tr>
+                    count++;
+                }
+                }
+            </tbody>
+        </table>
+        @if (Model.ContestList.Any() && (bool)this.ViewData["IsOrganiser"])
+        {
+            <a asp-action="CreateContest" asp-controller="Contests" type="button" class="btn btn-primary" style="background-color: #6d6d6d; border-color: cornsilk; color: #EFB;">
+                Create
+            </a>
+        }
+    }
+    @if (!Model.ContestList.Any())
+    {
+        if (!(bool)this.ViewData["IsOrganiser"])
+        {
+            <div class="text-center" style="color:cornsilk">
+                <h3>There are no opened contests at the moment.</h3>
+                <p>If you are organiser, you can create one after login.</p>
+            </div>
+        }
+
+
+        else if ((bool)this.ViewData["IsOrganiser"])
+        {
+            <div class="text-center" style="color:cornsilk;">
+                <h4>There are no opened contests at the moment.</h4>
+                <h4>You can go and create one!</h4>
+                <a asp-action="CreateContest" asp-controller="Contests" type="button" class="btn btn-primary">Create</a>
+            </div>
+        }
+    }
+</body>

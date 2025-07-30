@@ -1,0 +1,47 @@
+﻿@{
+    this.ViewData["Title"] = "ClosedUserContest";
+    this.ViewData["IsAuthenticated"] = this.Context.Session.Keys.Contains("CurrentUser");
+    this.ViewData["IsOrganiser"] = this.Context.Session.Keys.Contains("IsOrganiser");
+    int count = 1;
+}
+<body>
+
+    <table class="table table-hover table-striped">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Contest Title</th>
+                <th scope="col">Second phase end</th>
+                <th scope="col">Contest Category</th>
+            </tr>
+        </thead>
+
+        @model PhotoContest.Models.DTOs.ListModels.ContestIndex
+        <tbody class="table-hover">
+            @if (Model.ContestList.Any())
+            {
+                @foreach (var contest in Model.ContestList)
+                {
+                    <tr>
+                        <td>
+                            @count
+                        </td>
+                        <td>
+                            <a asp-controller="Contests" asp-action="Details" asp-route-id="@contest.Id">
+                                @contest.Title
+                            </a>
+                        </td>
+                        <td>
+                            @contest.DueDate.ToString("HH:mm dd-MMMM/yyyy")
+                        </td>
+                        <td>
+                            @contest.ContestType
+                        </td>
+                    </tr>
+                    count++;
+                }
+            }
+        </tbody>
+    </table>
+</body>
+

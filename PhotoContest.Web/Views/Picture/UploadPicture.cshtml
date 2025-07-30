@@ -1,0 +1,56 @@
+﻿@{
+    this.ViewData["Title"] = "Upload Picture";
+    this.ViewData["IsAuthenticated"] = this.Context.Session.Keys.Contains("CurrentUser");
+    this.ViewData["IsPhotoJunkey"] = this.Context.Session.Keys.Contains("IsPhotoJunkey");
+}
+@model PictureViewModel
+<td>
+
+
+    @if ((bool)this.ViewData["IsAuthenticated"])
+    {
+        @if ((bool)this.ViewData["IsPhotoJunkey"])
+        {
+            <form asp-action="UploadPicture" enctype="multipart/form-data" style="color:cornsilk;">
+
+                <div>
+                    <b>
+                        <label asp-for="Title" class="form-label"></label>
+                    </b>
+                    <div>
+                        <input asp-for="Title" class="form-input" />
+                        <br />
+                    </div>
+                    <b>
+                        <label asp-for="Story" class="form-label"></label>
+                    </b>
+                    <div>
+                        <div>
+                        <textarea style=" min-width:500px; max-width:100%;min-height:50px;height:100%;width:100%;" 
+                                  asp-for="Story" class="form-input" spellcheck="true"  ></textarea>
+                        </div>
+                    </div>
+                </div>
+                <p>
+                    <div>
+                        <p>
+                            <input asp-for="ImageFile" />
+                            <input type="submit" />
+                            <br />
+                        </p>
+                    </div>
+                </p>
+            </form>
+
+        }
+    }
+    else
+    { 
+        <div style="color: cornsilk;">
+            <p>
+                Only photojunkey's can upload pictures and participate to different contests.
+            </p>
+        </div>
+    }
+
+</td>

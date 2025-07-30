@@ -1,0 +1,41 @@
+﻿@{
+    this.ViewData["Title"] = "AuthorDetails";
+    this.ViewData["IsAuthenticated"] = this.Context.Session.Keys.Contains("CurrentUser");
+    this.ViewData["IsPhotoJunkey"] = this.Context.Session.Keys.Contains("IsPhotoJunkey");
+    this.ViewData["IsOrganiser"] = this.Context.Session.Keys.Contains("IsOrganiser");
+
+}
+@model PhotoContest.Web.Models.UserViewModel
+<body>
+
+    <div class="card text-center" style="background-color:silver;">
+        <div class="card-header">
+            @Model.Username profile
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">@Model.Username</h5>
+            <p class="card-text">First Name: @Model.FirstName</p>
+            <p class="card-text">Last Name: @Model.LastName</p>
+            <p class="card-text">Email: @Model.Email</p>
+            <p class="card-text">Score: @Model.Score</p>
+            <p class="card-text">Statistic:</p>
+            <p class="card-text">Open contests: @Model.OpenContests.Count()</p>
+            <p class="card-text">Contests in Vote phase: @Model.ContestsInVotePhase.Count()</p>
+            <p class="card-text">Finished contests: @Model.FinishedContests.Count()</p>
+            @*<a href="#" class="btn btn-primary">Go somewhere</a>*@
+        </div>
+        @if ((bool)this.ViewData["IsOrganiser"])
+        {
+            <div class="card-footer">
+                <div>
+                    <a class="btn btn-success" asp-action="FinishedContest" asp-controller="User">Finished Contests</a>
+                    <a class="btn btn-success" asp-action="VoteContests" asp-controller="User">Vote Contests</a>
+                    <a class="btn btn-success" asp-action="OpenContests" asp-controller="User">Open Contests</a>
+                </div>
+            </div>
+        }
+        <div class="card-footer text-muted">
+            Member since: @Model.CreatedOn
+        </div>
+    </div>
+</body>

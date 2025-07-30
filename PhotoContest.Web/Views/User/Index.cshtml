@@ -1,0 +1,55 @@
+﻿@{
+    this.ViewData["Title"] = "VoteContests";
+    this.ViewData["IsAuthenticated"] = this.Context.Session.Keys.Contains("CurrentUser");
+    this.ViewData["IsOrganiser"] = this.Context.Session.Keys.Contains("IsOrganiser");
+    int count = 1;
+}
+<body>
+
+    <table class="table table-hover table-striped">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">
+                    Title
+                    @*<a asp-controller="Contests" asp-action="VoteContests" asp-route-SortBy="Title" asp-route-SortOrder="@this.ViewData["SortOrder"]"><span>Title</span></a>*@
+                </th>
+                <th scope="col">
+                    Vote until
+                    @*<a asp-controller="Contests" asp-action="VoteContests" asp-route-SortBy="DueDate" asp-route-SortOrder="@this.ViewData["SortOrder"]"><span>Vote Until</span></a>*@ Vote until
+                </th>
+                <th scope="col">
+                    Category
+                    @*<a asp-controller="Contests" asp-action="VoteContests" asp-route-SortBy="Category" asp-route-SortOrder="@this.ViewData["SortOrder"]"><span>Category</span></a>*@
+                </th>
+            </tr>
+        </thead>
+
+        @model PhotoContest.Models.DTOs.ListModels.ContestIndex
+        <tbody class="table-hover" style="background-color: gainsboro">
+            @if (Model.ContestList.Any())
+            {
+                @foreach (var contest in Model.ContestList)
+                {
+                    <tr>
+                        <td>
+                            @count
+                        </td>
+                        <td>
+                            <a asp-controller="Contests" asp-action="Vote" asp-route-id="@contest.Id">
+                                @contest.Title
+                            </a>
+                        </td>
+                        <td>
+                            @contest.DueDate.ToString("HH:mm dd-MMMM/yyyy")
+                        </td>
+                        <td>
+                            @contest.ContestType
+                        </td>
+                    </tr>
+                    count++;
+                }
+            }
+        </tbody>
+    </table>
+</body>

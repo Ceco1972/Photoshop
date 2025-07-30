@@ -1,0 +1,113 @@
+﻿@{
+
+    this.ViewData["IsPhotoJunkey"] = this.Context.Session.Keys.Contains("IsPhotoJunkey");
+}
+@model PhotoContest.Web.Models.UserViewModel
+<body>
+
+    <div class="card text-center" style="background-color:silver;">
+        <div class="card-header">
+            My profile
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">@Model.Username</h5>
+            <p class="card-text">First Name: @Model.FirstName</p>
+            <p class="card-text">Last Name: @Model.LastName</p>
+            <p class="card-text">Email: @Model.Email</p>
+            <p class="card-text">Score: @Model.Score</p>
+            <p class="card-text">Statistic:</p>
+            <p class="card-text">Open contests: @Model.OpenContests.Count()</p>
+            <p class="card-text">Contests in Vote phase: @Model.ContestsInVotePhase.Count()</p>
+            <p class="card-text">Finished contests: @Model.FinishedContests.Count()</p>
+            @*<a href="#" class="btn btn-primary">Go somewhere</a>*@
+        </div>
+        <div class="card-footer">
+            <div>
+                <a class="btn btn-success" asp-action="FinishedContest" asp-controller="User">Finished Contests</a>
+                <a class="btn btn-success" asp-action="VoteContests" asp-controller="User">Vote Contests</a>
+                <a class="btn btn-success" asp-action="OpenContests" asp-controller="User">Open Contests</a>
+            </div>
+        </div>
+        <div class="card-footer text-muted">
+            Member since: @Model.CreatedOn
+        </div>
+    </div>
+
+    @*<div class="container" style="color: cornsilk;">
+            <div class="col">
+                <div class="row">
+
+                    <h3>
+                        First name: @Model.FirstName
+                    </h3>
+                </div>
+                <div class="row">
+                    <h3>
+                        Last name: @Model.LastName
+                    </h3>
+                </div>
+                @if ((bool)this.ViewData["IsPhotoJunkey"])
+                {
+                    <div class="row">
+
+                        <h3>
+                            Score: @Model.Score
+                        </h3>
+                    </div>
+                }
+                <div class="row">
+                    <h3>
+                        E-mail: @Model.Email
+                    </h3>
+                    <div class="container">
+                        <div class="col">
+                            <div class="row">
+                                <b>
+                                    Statistics:
+                                </b>
+                                <div class="row">
+                                    Winned contests :
+                                    @if (Model.WinnedContests.Any())
+                                    {
+                                        <div>
+
+                                            @Model.WinnedContests.Count()
+                                        </div>
+                                    }
+                                </div>
+                                <div class="row">
+                                    Open contests that participated in :
+                                    @if (Model.OpenContests.Any())
+                                    {
+                                        <div>
+                                            @Model.OpenContests.Count()
+                                        </div>
+                                    }
+                                </div>
+                                <div class="row">
+                                    Contests in in vote phase :
+                                    @if (Model.ContestsInVotePhase.Any())
+                                    {
+                                        <div>
+                                            @Model.ContestsInVotePhase.Count()
+                                        </div>
+                                    }
+                                </div>
+                                <div class="row">
+                                    All finished contests :
+                                    @if (Model.FinishedContests.Any())
+                                    {
+                                        <div>
+
+                                            @Model.FinishedContests.Count()
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>*@
+</body>

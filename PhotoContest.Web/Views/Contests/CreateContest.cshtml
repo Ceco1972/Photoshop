@@ -1,0 +1,97 @@
+﻿@{
+    this.ViewData["Title"] = "Create Contest";
+}
+
+@model CreateContestModel
+@using PhotoContest.Models.Models.eNums
+<div style="color: cornsilk;" class="container align-items-center">
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1>Contest Rules</h1>
+                </div>
+                <div class="modal-body">
+                    Here are the contest rules and requirments.
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger" data-toggle="modal" data-target="#myModal">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="float-md-right">
+
+        <button class="btn btn-info" data-toggle="modal" data-target="#myModal">
+            Rules
+        </button>
+    </div>
+
+    <form asp-action="CreateContest" enctype="multipart/form-data">
+        <div class="row" style="display: unset">
+            <div class="col">
+                <b>
+                    <label asp-for="Title" class="form-label"></label>
+                </b>
+                <div>
+                    <input asp-for="Title" class="form-input" />
+                    <br />
+                </div>
+            </div>
+        </div>
+        <div class="row" style="display: unset">
+            <div class="col">
+                <b>
+                    <label asp-for="Category" class="form-label"></label>
+                </b>
+                <div>
+                    <input asp-for="Category" class="form-input" />
+                    <br />
+                </div>
+            </div>
+        </div>
+        <div class="row" style="display: unset">
+            <div class="col">
+                <b>
+                    <label asp-for="ContestType" class="form-label"></label>
+                </b>
+                <div>
+                    <select asp-for="@Model.ContestType" asp-items="Html.GetEnumSelectList<ContestType>()"></select>
+                    <br />
+                </div>
+            </div>
+        </div>
+        <div class="row" style="display: unset">
+            <div class="col">
+                <b>
+                    <label asp-for="FirstPhaseEnd" class="from-label"> </label>
+                </b>
+                <div>
+                    <input asp-for="FirstPhaseEnd" class="form-input"><br />
+                </div>
+            </div>
+        </div>
+        <div class="row" style="display: unset">
+            <div class="col">
+                <b>
+                    <label asp-for="DueDate" class="from-label"></label>
+                </b>
+                <div>
+                    <input asp-for="DueDate" class="form-input"><br />
+                </div>
+            </div>
+        </div>
+        <div class="form-input" style="display: unset">
+            <p>
+                <div>
+                    <p>
+                        <input class="btn btn-secondary" style="margin-left: 17px;" type="submit" />
+                    </p>
+                </div>
+            </p>
+        </div>
+    </form>
+
+</div>

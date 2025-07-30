@@ -1,0 +1,96 @@
+﻿@{
+    this.ViewData["Title"] = "OpenContests";
+    this.ViewData["IsAuthenticated"] = this.Context.Session.Keys.Contains("CurrentUser");
+    this.ViewData["IsPhotoJunkey"] = this.Context.Session.Keys.Contains("IsPhotoJunkey");
+    this.ViewData["SecondPhoto"] = this.Context.Session.Keys.Contains("SecondPhoto");
+    @using PhotoContest.Models.Models.eNums;
+
+}
+@model PhotoContest.Models.DTOs.ContestDTO
+
+<body>
+    <div>
+
+        @if ((bool)this.ViewData["IsAuthenticated"])
+        {
+
+            @if ((bool)this.ViewData["IsPhotoJunkey"])
+            {
+                if (Model.Phase == Phase.Open)
+                {
+                    if (!Model.IsUserContest)
+                    {
+                        <div class="form-group">
+                            <p>
+                                <a asp-controller="Picture" asp-action="UploadPicture" class="btn btn-secondary" asp-route-id="@Model.Id">
+                                    <span>Enroll</span>
+                                </a>
+                            </p>
+                        </div>
+                    }
+                }
+            }
+        }
+    </div>
+
+    <div style="color: cornsilk;">
+        <h3>
+            @Model.Title
+        </h3>
+        @if (Model.Pictures.Any())
+        {
+            var Pictures = Model.Pictures.ToArray();
+            for (int i = 0; i < Pictures.Length; i++)
+            {
+
+                var picture = Pictures[i];
+
+                <div class="container" style="max-width: 470px; max-height:420px; display: inline-block; padding: 20px;">
+
+
+                    <div class="card">
+                        <img src="~/Uploads/@picture.ImageFile" class="card-img-top">
+                        <div class="card-body" style="color: black;">
+                            <h5 class="card-title">@picture.Title</h5>
+                            <p class="card-text">@picture.Story</p>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-success" style=" margin-left: 85px; padding-left: 60px; padding-right: 60px; margin-right: 20px;"
+                                    href="#" data-toggle="modal" data-target="#myDetailsModal-@i">
+                                Show more...
+                            </button>
+
+                        </div>
+                        <div class="modal fade" style="color:GrayText" id="myDetailsModal-@i">
+                            <div class="modal-dialog modal-lg modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1>@picture.Title</h1>
+                                    </div>
+                                    <div class="modal-body">
+                                        <img src="~/Uploads/@picture.ImageFile" style="width:765px;">
+                                        <div class="modal-footer">
+                                            <b>
+                                                <i>
+                                                    @picture.Story
+
+                                                </i>
+                                            </b>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-danger" data-toggle="modal" data-target="#myDetailsModal-@i">
+                                            Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            }
+        }
+    </div>
+
+</body>

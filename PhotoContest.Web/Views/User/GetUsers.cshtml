@@ -1,0 +1,75 @@
+﻿@{
+    this.ViewData["Title"] = "GetUsers";
+    this.ViewData["IsAuthenticated"] = this.Context.Session.Keys.Contains("CurrentUser");
+    this.ViewData["IsPhotoJunkey"] = this.Context.Session.Keys.Contains("IsPhotoJunkey");
+    this.ViewData["IsOrganiser"] = this.Context.Session.Keys.Contains("IsOrganiser");
+    int count = 1;
+}
+
+
+<body>
+    @if ((bool)this.ViewData["IsOrganiser"])
+    {
+
+
+        <table class="table table-hover table-striped">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Score</th>
+                    <th scope="col">CreateOn</th>
+                    <th scope="col">Email</th>
+                </tr>
+            </thead>
+            @model PhotoContest.Models.DTOs.ListModels.UserIndex
+            <tbody style="color: cornsilk; background-color:gray;">
+
+                @if (Model.UserList.Any())
+                {
+                    @foreach (var user in Model.UserList)
+                    {
+
+                        <tr>
+
+                            <td>
+                                @count
+                            </td>
+
+                            <td>
+                                <a asp-action="DetailsUser" asp-controller="User" asp-route-id="@user.Id" style="color:black;"><span>@user.Username</span></a>
+                            </td>
+                            <td>
+                                @user.FirstName
+                            </td>
+                            <td>
+                                @user.LastName
+                            </td>
+
+                            <td>
+                                @user.Score
+                            </td>
+                            <td>
+                                @user.CreatedOn
+                            </td>
+                            <td>
+                                @user.Email
+                            </td>
+                        </tr>
+                        count++;
+                    }
+                }
+
+        </table>
+    }
+    else
+    {
+        <div class="text-center">
+            <p>
+                You are not authorized!
+            </p>
+        </div>
+    }
+</body>
