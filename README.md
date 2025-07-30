@@ -1,6 +1,6 @@
 # GroupFinalProject
 
-Note: The project was initially pushed to GitLab
+Note: This is my Telerik graduation project, which was initially pushed to GitLab
 
 ## Getting started
 
