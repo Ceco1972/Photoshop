@@ -1,4 +1,4 @@
-# GroupFinalProject
+# FinalProject
 
 Note: This is my Telerik graduation project, which was initially pushed to GitLab
 
