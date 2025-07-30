@@ -1,6 +1,6 @@
 # FinalProject
 
-Note: This is my Telerik graduation project, which was initially pushed to GitLab
+Note: This is my Telerik graduation project, which was initially pushed to GitLab. See Photo_Contest.docx for project details.
 
 ## Getting started
 
